@@ -3,10 +3,10 @@
 #then will start the learning sistem
 
 #Imports
+from Utilities import Conf, Console
 from Extentions import Convertion_extentions as Convert
 from Genetics.Individuals import Individual
 from Genetics.Individual_behavior import Neural_behav
-from Utilities import Conf, Console
 
 #Functions
 def get_inputs(inputs_amout: int):
@@ -19,9 +19,9 @@ def get_inputs(inputs_amout: int):
             )
         return inputs
 
-def create_generation(size : int, input):
+def create_generation(size1000 : int, input):
     for i in range(size):
-        generation.append(Individual(inputs))
+        generation.append(Individual(Conf.inputs))
         brain = Individual.set_brain(neural_struct)
 
         generation[i].weights = brain[0]
@@ -29,22 +29,17 @@ def create_generation(size : int, input):
 
 
 #Variables
-max_individuals = 3
-inputs = 1
-outputs = 1
-layers = 2
-neurons_per_layer = 3
 generation = []
 neural_struct = []
 
 #Main program
 Conf.config()
 
-neural_struct = Neural_behav.define_neural(inputs, outputs, layers, neurons_per_layer)
+neural_struct = Neural_behav.define_neural(Conf.inputs, Conf.outputs, Conf.layers, Conf.neurons_per_layer)
 
 print(neural_struct)
 
-create_generation(3, get_inputs(inputs))
+create_generation(3, get_inputs(Conf.inputs))
 
 
 for i in generation:
@@ -54,3 +49,5 @@ for i in generation:
 
 input()
 Console.clear()
+
+print(Convert.To_bin(4))

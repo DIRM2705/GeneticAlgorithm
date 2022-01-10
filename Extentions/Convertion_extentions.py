@@ -1,10 +1,11 @@
-max_bits : int = 7 #Maximum amount of bits
+from Utilities import Conf
 
 def To_bin(number : int) -> str: #Convert decimals to binary number (in string)
 
+    print(Conf.max_bits)
     binNumber = '' #Auxiliar variable
 
-    for i in range(max_bits, -1, -1):
+    for i in range(Conf.max_bits, -1, -1):
         bitValue = 2**i #
         if number >= bitValue:
             binNumber += '1'
@@ -17,7 +18,7 @@ def To_bin(number : int) -> str: #Convert decimals to binary number (in string)
 def To_dec(number :str) -> int:
     decNumber = 0
 
-    i = max_bits
+    i = Conf.max_bits
     for char in number:
         if char == '1':
             decNumber += 2**i
