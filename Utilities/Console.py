@@ -9,7 +9,6 @@ def clear():
         os.system('clear')
 
 def reset():
-    print('A reset is needed')
     print('resetting in...')
     for i in range(3, 0, -1):
         print('{}...'.format(i))

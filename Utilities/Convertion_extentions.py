@@ -1,8 +1,6 @@
 from Utilities import Conf
 
 def To_bin(number : int) -> str: #Convert decimals to binary number (in string)
-
-    print(Conf.max_bits)
     binNumber = '' #Auxiliar variable
 
     for i in range(Conf.max_bits, -1, -1):
