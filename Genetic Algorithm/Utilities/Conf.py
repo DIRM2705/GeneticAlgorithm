@@ -1,11 +1,11 @@
 from Utilities import Console
 
-inputs = 2
+inputs = 1
 outputs = 1
-layers = 2
-neurons_per_layer = 3
-max_bits = 7
-max_individuals = 3
+layers = 1
+neurons_per_layer = 1
+max_bits = 27
+max_individuals = 2
 max_parents = 2
 children_per_couple = 5
 mutation_rate = 5
@@ -72,7 +72,6 @@ def create_config():
 
     max_individuals = input('max_individuals: ')
     max_bits = int(input('max bits: '))
-    max_bits -= 1
 
     variables = [
     'inputs = {}\n'.format(inputs),

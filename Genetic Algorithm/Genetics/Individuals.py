@@ -1,5 +1,6 @@
 import random
-from Utilities import Convertion_extentions as Convert
+import math
+from Utilities import Convertion_utilities as Convert
 from Genetics.Individual_behavior import Neural_behav
 
 class Individual(object):
@@ -14,21 +15,23 @@ class Individual(object):
 
 
     def __add__(self, i2):
-        child = ''
-        parent1 = Convert.To_bin(self.x[0])
-        parent2 = Convert.To_bin(i2.x[0])
-        splitPoint = random.randint(1, len(parent1) - 1)
+        new_weights = []
+        new_biases = []
+        for i in range(len(self.weights)):
+            neuron_weights = []
+            neuron_biases = []
+            for j in range(len(self.weights[i])):
+                neuron_weights.append(Neural_behav.add_binaries(self.weights[i][j], i2.weights[i][j]))
+            new_weights.append(neuron_weights)
+
+        new_individual = Individual(self.inputs)
+        new_individual.weights = new_weights
+        new_individual.biases = new_biases
+
+        return new_individual
 
 
-        for i in range (0, len(parent1), 1):
-            if i < splitPoint:
-                child += parent1[i]
-            else:
-                child += parent2[i]
-
-        return Individual(0, [Convert.To_dec(child)])
-
-    def train(self, neural_str):
+    def think(self, neural_str):
         i = 0
         Train_outputs = self.inputs
 
@@ -46,7 +49,6 @@ class Individual(object):
                 neuron_output = []
                 for ins in range(len(Train_outputs)):
                     print('Input No. ' + str(ins + 1))
-                    print(Train_outputs[ins])
                     print('Weight No. ' + str(weight_index))
                     print(self.weights[i][weight_index])
 
