@@ -2,17 +2,18 @@ from Utilities import Console
 
 inputs = 1
 outputs = 1
-layers = 1
-neurons_per_layer = 1
-max_bits = 27
-max_individuals = 2
-max_parents = 2
+layers = 4
+neurons_per_layer = 9
+max_bits = 28
+max_individuals = 1000
+max_parents = 10
 children_per_couple = 5
-mutation_rate = 5
+mutation_rate = 25
+max_generations = 500000
+individuals_to_save = 200
 
 
 def config():
-    Console.clear()
     try:
         with open('GenAlg.conf', 'r') as f:
             value = []
@@ -41,6 +42,8 @@ def config():
                 raise ValueError('Children mismatch')
             if mutation_rate != value[8]:
                 raise ValueError('Mutation mismatch')
+            if max_generations != value[9]:
+                raise ValueError('Generations mismatch')
 
     except FileNotFoundError:
         create_config()
@@ -83,6 +86,7 @@ def create_config():
     'max_parents = {}\n'.format(max_parents),
     'children_per_couple = {}\n'.format(children_per_couple),
     'mutation_rate = {}\n'.format(mutation_rate),
+    'max_generations = {}\n'.format(max_generations)
     ]
 
     print('Configuration ready')
@@ -99,5 +103,6 @@ def update_config(values):
     'max_individuals = {}\n'.format(values[5]),
     'max_parents = {}\n'.format(values[6]),
     'children_per_couple = {}\n'.format(values[7]),
-    'mutation_rate = {}\n'.format(values[8])
+    'mutation_rate = {}\n'.format(values[8]),
+    'max_generations = {}\n'.format(values[9])
     ]

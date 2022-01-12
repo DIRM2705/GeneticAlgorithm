@@ -16,3 +16,9 @@ def reset():
     print('resetting')
 
     os.execl(sys.executable, sys.executable, 'Main.py')
+
+def wait_for_key():
+    if os.name == 'nt':
+        os.system('pause')
+    elif os.name == 'posix':
+        os.system('read -s -n 1 -p "Press any key to continue..."')

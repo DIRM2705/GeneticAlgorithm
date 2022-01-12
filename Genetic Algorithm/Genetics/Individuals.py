@@ -1,5 +1,6 @@
 import random
 import math
+import numpy as np
 from Utilities import Convertion_utilities as Convert
 from Genetics.Individual_behavior import Neural_behav
 
@@ -19,10 +20,15 @@ class Individual(object):
         new_biases = []
         for i in range(len(self.weights)):
             neuron_weights = []
-            neuron_biases = []
             for j in range(len(self.weights[i])):
                 neuron_weights.append(Neural_behav.add_binaries(self.weights[i][j], i2.weights[i][j]))
             new_weights.append(neuron_weights)
+
+        for i in range(len(self.biases)):
+            neuron_biases = []
+            for j in range(len(self.biases[i])):
+                neuron_biases.append(Neural_behav.add_binaries(self.biases[i][j], i2.biases[i][j]))
+            new_biases.append(neuron_biases)
 
         new_individual = Individual(self.inputs)
         new_individual.weights = new_weights
@@ -39,36 +45,30 @@ class Individual(object):
             if i == 0:
                 i += 1
                 continue
-            print('Layer No. {}'.format(i + 1))
             weight_index = 0
             layer_output = []
 
             for neuron in range(layer):
-                print('Neuron No. {}'.format(neuron + 1))
-                print('Bias = {}'.format(self.biases[i][neuron]))
-                neuron_output = []
+                activate = self.biases[i][neuron]
                 for ins in range(len(Train_outputs)):
-                    print('Input No. ' + str(ins + 1))
-                    print('Weight No. ' + str(weight_index))
-                    print(self.weights[i][weight_index])
 
-                    neuron_output.append(
-                    self.weights[i][weight_index] * Train_outputs[ins] + self.biases[i][neuron]
-                    )
-
+                    activate += self.weights[i][weight_index] * Train_outputs[ins]
                     weight_index += 1
 
-                layer_output.append(sum(neuron_output))
+                activate = 1/(1-np.exp(-activate))
+                layer_output.append(round(activate, 6))
 
-            print(layer_output)
             Train_outputs = layer_output
+            #input()
             i += 1
+
         return Train_outputs
 
     def set_score(self, ex_out):
         partial = 0
-        for i in range(len(self.outputs)):
-            partial += ex_out[i] - self.outputs[i]
+        for output in self.outputs:
+            aux = ex_out - output
+            partial = 1 - abs(aux)/100
         return partial
 
     @staticmethod
